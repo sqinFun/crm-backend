@@ -1,5 +1,6 @@
 import express from 'express'
 import path from 'path'
+import cors from 'cors'
 import dotenv from 'dotenv'
 dotenv.config({ path: './.env' });
 import apiRouter from "./router/router.js";
@@ -9,6 +10,7 @@ const PORT = process.env.PORT
 const HOST = process.env.HOST
 const app = express()
 
+app.use(cors());
 app.use(express.static(path.resolve(__dirname, 'static')))
 app.use(express.json())
 app.use(express.urlencoded({ extended: false }))
