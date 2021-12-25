@@ -2,8 +2,7 @@ import express from 'express'
 import path from 'path'
 import dotenv from 'dotenv'
 dotenv.config({ path: './.env' });
-
-import apiRouter from './router/router.js'
+import apiRouter from "./router/router.js";
 
 const __dirname = path.resolve()
 const PORT = process.env.PORT
