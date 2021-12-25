@@ -2,5 +2,14 @@
   "presets": [
     "@babel/preset-env"
   ],
-  "sourceMaps": true
+  "sourceMaps": true,
+  "plugins": [
+    ["module-resolver", {
+      "root": ["./"],
+      "alias": {
+        "@modules": "./modules",
+        "@models": "./db/models"
+      }
+    }]
+  ]
 }
