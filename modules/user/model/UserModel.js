@@ -10,6 +10,20 @@ export const getUsers = async (req, res) => {
   }
 }
 
+export const getUser = async (req, res) => {
+  try {
+    const {id} = req.params
+    const user = await User.findOne({
+      where: {
+        id,
+      }
+    })
+    res.json(user)
+  } catch ({message}) {
+    res.status(400).json({message})
+  }
+}
+
 export const addUsers = async (req, res) => {
   try {
     const user = req.body
