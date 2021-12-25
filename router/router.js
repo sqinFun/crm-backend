@@ -1,12 +1,28 @@
 import {Router} from "express";
-import db from '../settings/db.js'
+import {User} from "../db/models/User";
+User.sync()
 
 const router = Router()
 
-router.get('/', (req, res) => {
-  db.query(`SELECT * FROM users`, (err, result) => {
-    res.json(result)
-  })
+router.get('/users', async (req, res) => {
+  try {
+    const users = await User.findAll()
+    res.json(users)
+  } catch ({message}) {
+    res.status(400).json({message})
+  }
 })
+
+router.post('/users', async (req, res) => {
+  try {
+    const user = req.body
+    const {dataValues: newUser} = await User.create(user)
+    res.json({...newUser})
+
+  } catch ({message}) {
+    res.status(400).json({message})
+  }
+})
+
 
 export default router
