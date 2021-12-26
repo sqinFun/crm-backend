@@ -27,6 +27,9 @@ export const User = sequelize.define('User', {
   },
   roleId: {
     type: DataTypes.INTEGER,
+  },
+  password: {
+    type: DataTypes.STRING,
   }
 }, {
   timestamps: false

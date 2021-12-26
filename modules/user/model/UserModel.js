@@ -1,36 +1,21 @@
 import {User} from "@models/User";
 User.sync()
 
-export const getUsers = async (req, res) => {
-  try {
-    const users = await User.findAll()
-    res.json(users)
-  } catch ({message}) {
-    res.status(400).json({message})
-  }
+export const getUsers = async () => {
+  return await User.findAll()
 }
 
-export const getUser = async (req, res) => {
-  try {
-    const {id} = req.params
-    const user = await User.findOne({
-      where: {
-        id,
-      }
-    })
-    res.json(user)
-  } catch ({message}) {
-    res.status(400).json({message})
-  }
+export const getUser = async ({id}) => {
+  return await getUserByFilter({id})
 }
 
-export const addUsers = async (req, res) => {
-  try {
-    const user = req.body
-    const {dataValues: newUser} = await User.create(user)
-    res.json({...newUser})
+export const getUserByFilter = async (filter) => {
+  return await User.findOne({
+    where: filter
+  })
+}
 
-  } catch ({message}) {
-    res.status(400).json({message})
-  }
+export const createUser = async (user) => {
+  const {dataValues: newUser} = await User.create(user)
+  return newUser
 }
