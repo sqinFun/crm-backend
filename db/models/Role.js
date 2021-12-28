@@ -1,7 +1,7 @@
 import {DataTypes} from "sequelize";
 import sequelize from "../db";
 
-export const Role = sequelize.define('Role', {
+const Role = sequelize.define('Role', {
   id: {
     type: DataTypes.INTEGER,
     autoIncrement: true,
@@ -15,3 +15,7 @@ export const Role = sequelize.define('Role', {
 }, {
   timestamps: false
 })
+
+Role.sync({ alter: true })
+
+export default Role

@@ -1,36 +1,27 @@
-import {Role} from "@models/Role";
-Role.sync()
+import Role from "@models/Role";
+import {createRoleRules} from "@modules/roleRules/model/RoleRulesModel";
 
-export const getRoles = async (req, res) => {
-  try {
-    const roles = await Role.findAll()
-    res.json(roles)
-  } catch ({message}) {
-    res.status(400).json({message})
-  }
+import {includeRules} from "@modules/role/model/roleUtils";
+import RoleRules from "@models/RoleRules";
+
+export const getRoles = async () => {
+  return await Role.findAll({
+    include: RoleRules,
+  })
 }
 
-export const getRole = async (req, res) => {
-  try {
-    const {id} = req.params
-    const role = await Role.findOne({
-      where: {
-        id,
-      }
-    })
-    res.json(role)
-  } catch ({message}) {
-    res.status(400).json({message})
-  }
+export const getRole = async (id) => {
+  return await Role.findOne({
+    where: {
+      id,
+    },
+    include: RoleRules,
+  })
 }
 
-export const addRoles = async (req, res) => {
-  try {
-    const role = req.body
-    const {dataValues: newRole} = await Role.create(role)
-    res.json({...newRole})
-
-  } catch ({message}) {
-    res.status(400).json({message})
-  }
+export const createRole = async (role) => {
+  const {dataValues: newRole} = await Role.create(role)
+  const roleRules = await createRoleRules(newRole.id)
+  newRole.roleRule = roleRules
+  return newRole
 }
