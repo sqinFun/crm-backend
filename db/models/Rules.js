@@ -2,7 +2,7 @@ import {DataTypes} from "sequelize";
 import sequelize from "../db";
 import Role from "@models/Role";
 const defaultRule = 1
-const RoleRules = sequelize.define('RoleRules', {
+const Rules = sequelize.define('Rules', {
   id: {
     type: DataTypes.INTEGER,
     autoIncrement: true,
@@ -37,8 +37,8 @@ const RoleRules = sequelize.define('RoleRules', {
 }, {
   timestamps: false
 })
-Role.hasOne(RoleRules, {onDelete: "cascade"})
-RoleRules.belongsTo(Role, {onDelete: "cascade"})
-RoleRules.sync({ alter: true })
+Role.hasOne(Rules, {onDelete: "cascade"})
+Rules.belongsTo(Role, {onDelete: "cascade"})
+Rules.sync({ alter: true })
 
-export default RoleRules
+export default Rules

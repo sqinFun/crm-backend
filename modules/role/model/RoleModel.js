@@ -1,12 +1,11 @@
 import Role from "@models/Role";
-import {createRoleRules} from "@modules/roleRules/model/RoleRulesModel";
+import {createRules} from "@modules/Rules/model/RulesModel";
 
-import {includeRules} from "@modules/role/model/roleUtils";
-import RoleRules from "@models/RoleRules";
+import Rules from "@models/Rules";
 
 export const getRoles = async () => {
   return await Role.findAll({
-    include: RoleRules,
+    include: Rules,
   })
 }
 
@@ -15,13 +14,13 @@ export const getRole = async (id) => {
     where: {
       id,
     },
-    include: RoleRules,
+    include: Rules,
   })
 }
 
 export const createRole = async (role) => {
   const {dataValues: newRole} = await Role.create(role)
-  const roleRules = await createRoleRules(newRole.id)
-  newRole.roleRule = roleRules
+  const Rules = await createRules(newRole.id)
+  newRole.roleRule = Rules
   return newRole
 }
